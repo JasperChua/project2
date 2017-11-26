@@ -1,17 +1,17 @@
 /*
- * ICT1002 Assignment 2, 2017-18 Trimester 1.
- *
- * This file contains the definitions and function prototypes for all of
- * features of the campus designer.
- */
- 
+* ICT1002 Assignment 2, 2017-18 Trimester 1.
+*
+* This file contains the definitions and function prototypes for all of
+* features of the campus designer.
+*/
+
 #ifndef _CAMPUS1002_H
 #define _CAMPUS1002_H
- 
+
 #include <stdint.h>
 #include <stdio.h>
- 
- 
+
+
 /* the maximum number of characters we expect in a line of input */
 #define MAX_INPUT   256
 
@@ -42,9 +42,18 @@ typedef struct feature_struct {
 	int32_t     yloc;            /* y location */
 	int32_t     xdim;            /* x dimension */
 	int32_t     ydim;            /* y dimension */
+	struct feature_struct *next;
 } FEATURE;
- 
- 
+
+typedef FEATURE* FEATURE_PTR;
+
+
+/*Global variables*/
+int xdimension;
+int ydimension;
+char name[MAX_INPUT];
+
+
 /* functions defined in main.c */
 void main_design();
 int compare_token(const char *token1, const char *token2);
@@ -66,19 +75,22 @@ void do_design_move(const char *arg);
 void do_design_rename(const char *arg);
 void do_design_resize(const char *arg);
 void do_design_save(const char *arg);
- 
- 
+
+
 /* functions defined in features.c */
 FEATURE * features_add(char type, const char *id, const char *name, int xloc, int yloc, int xdim, int ydim);
 void features_close();
 void features_delete(FEATURE *feature);
-FEATURE * features_get();
+FEATURE * features_get(const char *id);
 void features_init();
 void features_list();
 void features_print(FEATURE *feature);
 int features_read(FILE *f);
 FEATURE * features_validate_geometry(const char *id, int xloc, int yloc, int xdim, int ydim);
 int features_write(FILE *f);
+int features_rename(FEATURE *f, const char *name);
+void features_move(FEATURE *f, int xloc, int yloc);
+void features_resize(FEATURE *f, int xdim, int ydim);
 
 /* functions defined in map.c */
 void map_close();
