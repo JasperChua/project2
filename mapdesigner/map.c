@@ -114,10 +114,17 @@ void map_print() {
  * Input:
  *   feature - a pointer to the feature structure to be added
  */
-void map_put_feature(FEATURE *feature) {
+void map_put_feature(FEATURE *feature) {	
 	
 	/* to be implemented */
-		
+	
+	for (int y = 0; y < feature->ydim; y++)
+	{
+		for (int x = 0; x < feature->xdim; x++)
+		{
+			map[feature->yloc + y][feature->xloc + x] = (int)feature->type;
+		}
+	}
 }
 
 
@@ -149,8 +156,13 @@ int map_read(FILE *f) {
 void map_remove_feature(FEATURE *feature) {
 	
 	/* to be implemented */
-			
+	for (int y = feature->yloc; y < headPtr->ydim; y++)
+	{
+		for (int x = feature->xloc; x < headPtr->xdim; x++)
+			map[y][x] = ' ';
+	}
 }
+
 
 
 /*
